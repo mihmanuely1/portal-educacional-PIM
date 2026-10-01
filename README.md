@@ -78,3 +78,8 @@ Este projeto é acadêmico e não possui licença aberta para uso comercial.
 
 ---
 
+### 👥 Grupo TechVenture
+
+Projeto desenvolvido pelo grupo **TechVenture**, como parte das atividades acadêmicas do curso de **Análise e Desenvolvimento de Sistemas (ADS)**.
+
+Feito com 💙 por **TechVenture**
