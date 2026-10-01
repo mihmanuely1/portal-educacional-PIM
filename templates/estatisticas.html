@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estatísticas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .cards-lado-a-lado {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            flex: 1 1 300px;
+            min-width: 250px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .grafico-pequeno {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>📊 Estatísticas do Usuário</h2>
+
+    <div class="cards-lado-a-lado">
+        <div class="card card-user">
+            <h3>👤 Usuário</h3>
+            <p><strong>Nome:</strong> {{ user }}</p>
+            <p><strong>Cursos acessados:</strong> {{ progresso }}</p>
+        </div>
+
+        <div class="card card-geral">
+            <h3>📈 Estatísticas Gerais</h3>
+            <ul>
+                <li><strong>Média de acessos:</strong> {{ media }}</li>
+                <li><strong>Mediana de acessos:</strong> {{ mediana }}</li>
+                <li><strong>Moda de acessos:</strong> {{ moda }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Gráfico de Acessos por Usuário</h3>
+        <div class="grafico-pequeno">
+            <canvas id="acessosChart"></canvas>
+        </div>
+    </div>
+
+    <script id="dados-grafico" type="application/json">
+        {
+            "nomes": {{ nomes | tojson | safe }},
+            "acessos": {{ acessos | tojson | safe }}
+        }
+    </script>
+
+    <script>
+        const data = JSON.parse(document.getElementById('dados-grafico').textContent);
+
+        const ctx = document.getElementById('acessosChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.nomes,
+                datasets: [{
+                    label: 'Cursos acessados',
+                    data: data.acessos,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <a href="{{ url_for('dashboard') }}">← Voltar ao Dashboard</a>
+</body>
+</html>
