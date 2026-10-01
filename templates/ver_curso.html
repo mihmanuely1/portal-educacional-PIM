@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ curso.titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            padding: 30px 20px;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        p.descricao {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .curso-imagem {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            margin-top: 40px;
+            font-size: 1.5rem;
+            color: #444;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 6px;
+            max-width: fit-content;
+        }
+
+        iframe {
+            width: 100%;
+            max-width: 700px;
+            height: 395px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: none;
+            margin-bottom: 30px;
+        }
+
+        .conteudo-texto {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            white-space: pre-wrap;
+            margin-bottom: 50px;
+        }
+
+        .curso-container {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;
+}
+
+        a.voltar {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        a.voltar:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            iframe {
+                height: 220px;
+            }
+
+            .curso-imagem {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ curso.titulo }}</h2>
+    <p class="descricao">{{ curso.descricao }}</p>
+
+       <div class="curso-container">
+        <img src="{{ url_for('static', filename=curso.imagem) }}" alt="Imagem do curso" class="curso-imagem" />
+        <div class="curso-conteudo">
+            <h3>Conteúdo</h3>
+            <p class="conteudo-texto">{{ curso.texto }}</p>
+        </div>
+    </div>
+
+    <h3>Vídeo</h3>
+    <iframe src="{{ curso.video }}" allowfullscreen></iframe>
+
+   
+
+    <a href="{{ url_for('cursos') }}" class="voltar">← Voltar para cursos</a>
+</body>
+</html>
