@@ -78,4 +78,3 @@ Este projeto é acadêmico e não possui licença aberta para uso comercial.
 
 ---
 
-Feito com 💙 por Luan Oliveira
