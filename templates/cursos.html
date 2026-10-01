@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seus Cursos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .cursos-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .curso-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 16px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .curso-card:hover {
+            transform: scale(1.02);
+        }
+
+        .curso-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .curso-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .curso-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .concluido {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .curso-card a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .curso-card a:hover {
+            text-decoration: underline;
+        }
+
+        a.voltar {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 18px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        a.voltar:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>🎓 Seus Cursos</h2>
+
+    <div class="cursos-container">
+        {% for id, curso in cursos.items() %}
+        <div class="curso-card">
+            <img src="{{ url_for('static', filename=curso.imagem) }}" alt="Imagem do curso">
+            <h3>{{ curso.titulo }}</h3>
+            <p>{{ curso.descricao }}</p>
+
+            {% if id in progresso %}
+                <p class="concluido">✔ Concluído</p>
+                <a href="{{ url_for('remover_progresso', curso_id=id) }}" style="color: red;">Remover progresso</a>
+            {% endif %}
+
+            <a href="{{ url_for('ver_curso', curso_id=id) }}">📖 Ver curso</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="voltar">← Voltar ao Dashboard</a>
+</body>
+</html>
